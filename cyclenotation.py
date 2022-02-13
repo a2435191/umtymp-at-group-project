@@ -1,6 +1,6 @@
 from manim import *
 import math
-# test
+
 class PermArray(Scene):
     def construct(self):
         arr = MathTex(r'\begin{bmatrix}1&2&3&4&5&6\\2&1&4&6&5&3\end{bmatrix}')
@@ -10,12 +10,13 @@ class TextBookCycle1(Scene):
     def construct(self):
         # arcs
         gap = PI/6
-        a2 = Arc(angle=-PI+gap, start_angle=3*PI/2-gap/2, radius=2)
-        a1 = Arc(angle=-PI+gap, start_angle=PI/2-gap/2, radius=2)
+        rad = 1.25
+        a2 = Arc(angle=-PI+gap, start_angle=3*PI/2-gap/2, radius=rad)
+        a1 = Arc(angle=-PI+gap, start_angle=PI/2-gap/2, radius=rad)
 
         # tips
-        a1.add_tip()
-        a2.add_tip()
+        a1.add_tip(tip_length=0.25)
+        a2.add_tip(tip_length=0.25)
 
         # captions
         a1c = MathTex(r'\alpha')
@@ -24,11 +25,11 @@ class TextBookCycle1(Scene):
         a2c.next_to(a2, LEFT)
 
         # numbers
-        p1 = MathTex(r'1').shift(UP*2)
-        p2 = MathTex(r'2').shift(DOWN*2)
+        ap1 = MathTex(r'1').shift(UP*rad)
+        ap2 = MathTex(r'2').shift(DOWN*rad)
 
         # animations
-        self.play(Write(p1), Create(a1), Write(a1c), Write(p2))
+        self.play(Write(ap1), Create(a1), Write(a1c), Write(ap2))
         self.play(Create(a2), Write(a2c))
 
 class TextBookCycle2(Scene):

@@ -1,4 +1,5 @@
 from manim import *
+import numpy as np
 import math
 
 class PermArray(Scene):
@@ -11,12 +12,18 @@ class TextBookCycle1(Scene):
         # arcs
         gap = PI/6
         rad = 1.25
-        a2 = Arc(angle=-PI+gap, start_angle=3*PI/2-gap/2, radius=rad)
-        a1 = Arc(angle=-PI+gap, start_angle=PI/2-gap/2, radius=rad)
+        tl = 0.25
+        adj = math.acos((2*rad**2-tl**2) / (2*rad**2))
+
+        a2 = Arc(angle=-PI+gap+adj, start_angle=3*PI/2-(gap+adj)/2, radius=rad, arc_center=np.array([0., 0., 0.]))
+        a1 = Arc(angle=-PI+gap+adj, start_angle=PI/2-(gap+adj)/2, radius=rad, arc_center=np.array([0., 0., 0.]))
 
         # tips
-        a1.add_tip(tip_length=0.25)
-        a2.add_tip(tip_length=0.25)
+        a1.add_tip(tip_length=tl)
+        a2.add_tip(tip_length=tl)
+
+        a1.move_arc_center_to(np.array([0., 0., 0.]))
+        a2.move_arc_center_to(np.array([0., 0., 0.]))
 
         # captions
         a1c = MathTex(r'\alpha')
@@ -25,8 +32,9 @@ class TextBookCycle1(Scene):
         a2c.next_to(a2, LEFT)
 
         # numbers
-        ap1 = MathTex(r'1').shift(UP*rad)
-        ap2 = MathTex(r'2').shift(DOWN*rad)
+        adj2 = 0.075
+        ap1 = MathTex(r'1').shift(UP*(rad-adj2))
+        ap2 = MathTex(r'2').shift(DOWN*(rad-adj2))
 
         # animations
         self.play(Write(ap1), Create(a1), Write(a1c), Write(ap2))
@@ -89,9 +97,13 @@ class TextBookCycle3(Scene):
 class FullCycle(Scene):
     def construct(self):
         # matrix
-        arreq = MathTex(r'\alpha=')
+        arreq = MathTex(r'\alpha','=')
         arr = Matrix([[1,2,3,4,5,6], [2,1,4,6,5,3]]) #, bracket_h_buff=SMALL_BUFF, bracket_v_buff=SMALL_BUFF)
         fullarr = VGroup(arreq, arr).arrange().shift(UP*2)
+        gap = PI/6
+        rad = 1.25
+        tl = 0.25
+        adj = math.acos((2*rad**2-tl**2) / (2*rad**2))
 
         # surrounding rectangles
         t0 =  SurroundingRectangle(arr.get_columns()[0], color=RED)
@@ -102,16 +114,17 @@ class FullCycle(Scene):
         t5 =  SurroundingRectangle(arr.get_columns()[5], color=BLUE)
 
         # cycles
-        gap = PI/6
-        rad = 1.25
         # cycle 1
         # arcs
-        a2 = Arc(angle=-PI+gap, start_angle=3*PI/2-gap/2, radius=rad)
-        a1 = Arc(angle=-PI+gap, start_angle=PI/2-gap/2, radius=rad)
+        a2 = Arc(angle=-PI+gap+adj, start_angle=3*PI/2-(gap+adj)/2, radius=rad)
+        a1 = Arc(angle=-PI+gap+adj, start_angle=PI/2-(gap+adj)/2, radius=rad)
 
         # tips
-        a1.add_tip()
-        a2.add_tip()
+        a1.add_tip(tip_length=tl)
+        a2.add_tip(tip_length=tl)
+
+        a1.move_arc_center_to(np.array([0., 0., 0.]))
+        a2.move_arc_center_to(np.array([0., 0., 0.]))
 
         # captions
         a1c = MathTex(r'\alpha')
@@ -120,21 +133,27 @@ class FullCycle(Scene):
         a2c.next_to(a2, LEFT)
 
         # numbers
-        ap1 = MathTex(r'1').shift(UP*rad)
-        ap2 = MathTex(r'2').shift(DOWN*rad)
+        adj2 = rad-0.075
+        ap1 = MathTex(r'1', color=RED).shift(UP*adj2)
+        ap2 = MathTex(r'2', color=RED).shift(DOWN*adj2)
 
         fullcycle1 = VGroup(a1, a2, a1c, a2c, ap1, ap2).shift(DOWN*1.5+LEFT*4.5)
 
         # cycle 2
         # arcs
-        b1 = Arc(angle=-2*PI/3+gap, start_angle=PI/2-gap/2, radius=rad)
-        b2 = Arc(angle=-2*PI/3+gap, start_angle=-PI/6-gap/2, radius=rad)
-        b3 = Arc(angle=-2*PI/3+gap, start_angle=-5*PI/6-gap/2, radius=rad)
+        adj3=adj
+        b1 = Arc(angle=-2*PI/3+gap+adj3, start_angle=PI/2-(gap+adj3)/2, radius=rad+0.1)
+        b2 = Arc(angle=-2*PI/3+gap+adj3, start_angle=-PI/6-(gap+adj3)/2, radius=rad+0.1)
+        b3 = Arc(angle=-2*PI/3+gap+adj3, start_angle=-5*PI/6-(gap+adj3)/2, radius=rad+0.1)
 
         # tips
-        b1.add_tip()
-        b2.add_tip()
-        b3.add_tip()
+        b1.add_tip(tip_length=tl)
+        b2.add_tip(tip_length=tl)
+        b3.add_tip(tip_length=tl)
+
+        b1.move_arc_center_to(np.array([0., 0., 0.]))
+        b2.move_arc_center_to(np.array([0., 0., 0.]))
+        b3.move_arc_center_to(np.array([0., 0., 0.]))
 
         # captions
         b2c = MathTex(r'\alpha')
@@ -144,31 +163,33 @@ class FullCycle(Scene):
         b3c = MathTex(r'\alpha').shift(d/2*UP + (d/2)*math.sqrt(3)*LEFT)
 
         # numbers
-        bp1 = MathTex(r'3').shift(UP*rad)
-        bp2 = MathTex(r'4').shift((rad/2)*math.sqrt(3)*RIGHT + DOWN*(rad/2))
-        bp3 = MathTex(r'6').shift((rad/2)*math.sqrt(3)*LEFT + DOWN*(rad/2))
+        bp1 = MathTex(r'3', color=BLUE).shift(UP*adj2)
+        bp2 = MathTex(r'4', color=BLUE).shift((adj2/2)*math.sqrt(3)*RIGHT + DOWN*(adj2/2))
+        bp3 = MathTex(r'6', color=BLUE).shift((adj2/2)*math.sqrt(3)*LEFT + DOWN*(adj2/2))
 
         fullcycle2 = VGroup(b1, b2, b3, b1c, b2c, b3c, bp1, bp2, bp3).shift(DOWN*1.5)
 
         # cycle 3
         # arcs
-        c1 = Arc(angle=-2*PI+PI/4, start_angle=PI/2-(PI/4)/2, radius=0.875)
+        c1 = Arc(angle=-2*PI+PI/4, start_angle=PI/2-(PI/4)/2, radius=0.9375+0.01432466)
         c1.shift(UP*0.375)
 
         # tips
-        c1.add_tip()
+        c1.add_tip(tip_length=tl)
 
         # captions
         c1c = MathTex(r'\alpha')
         c1c.next_to(c1, DOWN)
 
         # numbers
-        cp1 = MathTex(r'5').shift(UP*1.25)
+        cp1 = MathTex(r'5', color=GREEN).shift(UP*1.25)
 
         fullcycle2 = VGroup(c1, c1c, cp1).shift(DOWN*1.5+RIGHT*4.5)
 
         # animations
-        self.play(Write(arr), Write(arreq))
+        self.play(Write(arreq[0]))
+        self.play(Write(arr.get_brackets()), Write(arreq[1]))
+        self.play(Write(arr.get_entries()))
         self.wait(0.2)
         self.play(Create(t0), arr.get_columns()[0].animate.set_color(RED))
         self.play(Write(ap1))
@@ -189,6 +210,4 @@ class FullCycle(Scene):
 
         self.play(Create(cp1), ReplacementTransform(t5, t4), arr.get_columns()[4].animate.set_color(GREEN))
         self.play(Write(c1), Create(c1c))
-
-
         #self.play(ReplacementTransform(t0, t1))

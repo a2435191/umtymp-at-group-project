@@ -219,7 +219,9 @@ class Composition4(Scene):
         self.play(Uncreate(values), Uncreate(div))
         #self.play(sigm.animate.shift(LEFT*1.25), gamm.animate.shift(LEFT*1.25))
 
-        self.play(FadeOut(sigm.get_rows()[1]), FadeOut(gamm.get_rows()[0]), Unwrite(VGroup(sigm.get_brackets(),gamm.get_brackets())), sigm.get_rows()[0].animate(run_time=2).move_to(phatompermm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=2).move_to(phatompermm.get_rows()[1].get_center()))
+        #self.play(FadeOut(sigm.get_rows()[1]), FadeOut(gamm.get_rows()[0]), Unwrite(VGroup(sigm.get_brackets(),gamm.get_brackets())), sigm.get_rows()[0].animate(run_time=2).move_to(phatompermm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=2).move_to(phatompermm.get_rows()[1].get_center()))
+        self.play(FadeOut(sigm.get_rows()[1]), FadeOut(gamm.get_rows()[0]), Unwrite(VGroup(sigm.get_brackets(),gamm.get_brackets())), sigm.get_rows()[0].animate(run_time=1.25).move_to(phatompermm.get_rows()[0].get_center()+DOWN*0.1), gamm.get_rows()[1].animate(run_time=1.25).move_to(phatompermm.get_rows()[1].get_center()+UP*0.1))
+        self.play(sigm.get_rows()[0].animate(run_time=0.5).move_to(phatompermm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=0.5).move_to(phatompermm.get_rows()[1].get_center()))
         #self.play(sigm.get_rows()[0].animate(run_time=0.5).move_to(permm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=0.5).move_to(permm.get_rows()[1].get_center()))
         self.play(sigm.get_rows()[0].animate(run_time=0.5).move_to(permm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=0.5).move_to(permm.get_rows()[1].get_center()), Write(permm.get_brackets()), Write(permmeq))
 

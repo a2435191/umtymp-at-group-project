@@ -131,7 +131,7 @@ class Composition3(Scene):
         def shiftywifty(a,b):
             return gamm.get_columns()[a].animate.move_to(gamm.get_columns()[b].get_center()), gamm.get_columns()[b].animate.move_to(gamm.get_columns()[a].get_center())
 
-        self.play(Create(doots))
+        #self.play(Create(doots))
 
         # p1
         self.play(Create(l1p1), Create(actualtip, lag_ratio=0.75))
@@ -171,4 +171,49 @@ class Composition3(Scene):
 
         self.play(Write(values[3]), Write(values[4]))
 
+        self.wait(0.25)
+
+        self.play(Uncreate(l3p4), Uncreate(at32), Uncreate(fl), Uncreate(flt))
+
+        self.wait(0.25)
+
         #self.play()
+
+class Composition4(Scene):
+    def construct(self):
+        sigm = Matrix([[1,2,3,4,5], [2,4,3,5,1]]).scale(1.5)
+        gamm = Matrix([[2,4,3,5,1], [4,2,1,3,5]]).scale(1.5)
+        permm = Matrix([[1,2,3,4,5],[4,2,1,3,5]]).scale(1.5)
+        phatompermm = Matrix([[1,2,3,4,5],[4,2,1,3,5]]).scale(1.5).shift(1.25*RIGHT)
+
+        permmeq = MathTex(r'\gamma \sigma =').scale(1.5)
+        VGroup(permmeq, permm).arrange()
+
+
+        sigm.shift(1.75*UP+RIGHT*1.25)
+        gamm.shift(1.75*DOWN+RIGHT*1.25)
+        self.add(sigm, gamm)
+
+        c1 = MathTex(r'( \gamma','\sigma )(1)=4')
+        c2 = MathTex(r'( \gamma \sigma )(2)=2')
+        c3 = MathTex(r'( \gamma \sigma )(3)=1')
+        c4 = MathTex(r'( \gamma \sigma )(4)=3')
+        c5 = MathTex(r'( \gamma \sigma )(5)=5')
+        values = VGroup(c1, c2, c3, c4, c5).arrange(DOWN, buff=0.75).shift(LEFT*5.5)
+
+        div = Line(start=[0,5,0], end=[0,-5,0], color=YELLOW)
+        div.next_to(c3, RIGHT)
+        div.shift(RIGHT*0.25)
+
+        self.add(sigm, gamm, values, div)
+
+        self.play(Uncreate(values), Uncreate(div))
+        #self.play(sigm.animate.shift(LEFT*1.25), gamm.animate.shift(LEFT*1.25))
+
+        self.play(FadeOut(sigm.get_rows()[1]), FadeOut(gamm.get_rows()[0]), Unwrite(VGroup(sigm.get_brackets(),gamm.get_brackets())), sigm.get_rows()[0].animate(run_time=2).move_to(phatompermm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=2).move_to(phatompermm.get_rows()[1].get_center()))
+        #self.play(sigm.get_rows()[0].animate(run_time=0.5).move_to(permm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=0.5).move_to(permm.get_rows()[1].get_center()))
+        self.play(sigm.get_rows()[0].animate(run_time=0.5).move_to(permm.get_rows()[0].get_center()), gamm.get_rows()[1].animate(run_time=0.5).move_to(permm.get_rows()[1].get_center()), Write(permm.get_brackets()), Write(permmeq))
+
+        #self.play(ReplacementTransform(VGroup(sigm, gamm), permm))
+
+        self.wait(0.25)

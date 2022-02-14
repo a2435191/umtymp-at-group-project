@@ -210,6 +210,6 @@ class FullCycle(Scene):
         self.play(Create(b3), Write(b3c))
         self.wait(0.2)
 
-        self.play(Create(cp1), ReplacementTransform(t5, t4), arr.get_columns()[4].animate.set_color(GREEN))
-        self.play(Write(c1), Create(c1c))
+        self.play(Write(cp1), ReplacementTransform(t5, t4), arr.get_columns()[4].animate.set_color(GREEN))
+        self.play(Create(c1), Write(c1c))
         #self.play(ReplacementTransform(t0, t1))

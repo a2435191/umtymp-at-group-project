@@ -145,7 +145,7 @@ class Composition3(Scene):
         self.wait(0.25)
 
         # p2
-        self.play(Uncreate(VGroup(actualtip2, l1p4)), Create(l2p1), Create(at21, lag_ratio=0.75))
+        self.play(Uncreate(actualtip2), Uncreate(l1p4), Create(l2p1), Create(at21, lag_ratio=0.75))
 
         self.wait(0.25)
 
@@ -156,7 +156,7 @@ class Composition3(Scene):
         self.wait(0.25)
 
         # p3
-        self.play(Uncreate(VGroup(at22, l2p4)), Create(poopymiddle), Create(pmtip, lag_ratio=0.75))
+        self.play(Uncreate(at22), Uncreate(l2p4), Create(poopymiddle), Create(pmtip, lag_ratio=0.75))
 
         self.play(Write(values[2]))
 

@@ -212,4 +212,68 @@ class FullCycle(Scene):
 
         self.play(Write(cp1), ReplacementTransform(t5, t4), arr.get_columns()[4].animate.set_color(GREEN))
         self.play(Create(c1), Write(c1c))
+        self.wait(0.2)
+        self.play(Uncreate(t4))
+        self.wait(0.2)
+
+        # collapse
+        # phantoms
+        ccn = MathTex(r'(','1',',','2',')','(','3',',','4',',','6',')','(','5',')').scale(1.5)
+        #               0   1   2   3   4   5   6   7   8   9   10  11  12  13  14
+        #pc1 = Circle(radius=1.25).shift(DOWN*1.5+LEFT*4.5)
+        #pc2 = Circle(radius=1.25).shift(DOWN*1.5)
+        #pc3 = Circle(radius=1.25).shift(DOWN*1.5+RIGHT*4.5)
+
+        #self.play(Write(ccn), Create(VGroup(pc1, pc2, pc3)))
+        #self.play(MoveAlongPath(bp1, b1))
+
         #self.play(ReplacementTransform(t0, t1))
+
+        ars = VGroup(a2, a1)
+        brs = VGroup(b3, b2, b1)
+        crs = VGroup(c1)
+        arcremovalsurgery = VGroup(a2, a1, b3, b2, b1, c1)
+        labelremovalsurgery = VGroup(a1c, a2c, b1c, b2c, b3c, c1c)
+
+        missingpieces = VGroup(ccn[0], ccn[2], ccn[4], ccn[5], ccn[7], ccn[9], ccn[11], ccn[12], ccn[14])
+
+        #self.play(Write(ccn))
+
+        ccnp1 = ccn[1].get_center()
+        ccnp2 = ccn[3].get_center()
+        ccnp3 = ccn[6].get_center()
+        ccnp4 = ccn[8].get_center()
+        ccnp6 = ccn[10].get_center()
+        ccnp5 = ccn[13].get_center()
+
+        rt = 2.5
+
+        self.play(Unwrite(labelremovalsurgery, run_time=2.5), Uncreate(arcremovalsurgery, run_time=2.5, lag_ratio=0.1), ap1.animate(run_time=rt).move_to(ccnp1), ap2.animate(run_time=rt).move_to(ccnp2), bp1.animate(run_time=rt).move_to(ccnp3), bp2.animate(run_time=rt).move_to(ccnp4), bp3.animate(run_time=rt).move_to(ccnp6), cp1.animate(run_time=rt).move_to(ccnp5))
+        self.play(Write(missingpieces), ap1.animate.scale(1.5), ap2.animate.scale(1.5), bp1.animate.scale(1.5), bp2.animate.scale(1.5), bp3.animate.scale(1.5), cp1.animate.scale(1.5))
+
+        newccn = VGroup(missingpieces, ap1, ap2, bp1, bp2, bp3, cp1)
+
+        self.wait(0.2)
+
+        anl = Tex(r'\underline{Array Notation}').scale(1.5)
+
+        panl = Tex(r'\underline{Array Notation}').scale(1.5)
+        panl.set_fill(opacity=0)
+        panl.next_to(VGroup(arr, arreq), UP*2)
+        cnl = Tex(r'\underline{Cycle Notation}').scale(1.5)
+
+        pcnl = Tex(r'\underline{Cycle Notation}').scale(1.5)
+        pcnl.set_fill(opacity=0)
+        pcnl.next_to(newccn, UP*2)
+
+        self.play(VGroup(newccn, pcnl).animate.move_to([0,-1.75,0]), VGroup(arr, arreq, panl).animate.move_to([0,1.75,0]))
+
+        anl.next_to(VGroup(arr, arreq), UP*2)
+        cnl.next_to(newccn, UP*2)
+
+        #self.play(Write(anl), Write(cnl), Create(SurroundingRectangle(VGroup(arr, anl, arreq)), buff=100), Create(SurroundingRectangle(VGroup(newccn, cnl)), buff=100))
+
+        self.play(Write(anl), Write(cnl))
+
+        self.wait(0.2)
+        #self.play(ap1.animate(run_time=rt).move_to(ccnp1), ap2.animate(run_time=rt).move_to(ccnp2), bp1.animate(run_time=rt).move_to(ccnp3), bp2.animate(run_time=rt).move_to(ccnp4), bp3.animate(run_time=rt).move_to(ccnp6), cp1.animate(run_time=rt).move_to(ccnp5))

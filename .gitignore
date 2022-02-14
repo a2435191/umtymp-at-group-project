@@ -1,6 +1,6 @@
 **/partial_movie_files/**
-images/**
-Tex/**
+**/images/**
+**/Tex/**
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

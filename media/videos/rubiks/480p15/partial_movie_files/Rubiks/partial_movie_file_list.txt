@@ -1,8 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/rubiks/480p15/partial_movie_files/Rubiks/3676660487_3714403332_2932418074.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/rubiks/480p15/partial_movie_files/Rubiks/2835048567_1635987588_1040475949.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/rubiks/480p15/partial_movie_files/Rubiks/2835048567_3965333167_4247073422.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/rubiks/480p15/partial_movie_files/Rubiks/2835048567_2318837999_1043717314.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/rubiks/480p15/partial_movie_files/Rubiks/2835048567_3199612114_1043717314.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/rubiks/480p15/partial_movie_files/Rubiks/2835048567_3370486144_1043717314.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/rubiks/480p15/partial_movie_files/Rubiks/2835048567_1568988294_1119335174.mp4'

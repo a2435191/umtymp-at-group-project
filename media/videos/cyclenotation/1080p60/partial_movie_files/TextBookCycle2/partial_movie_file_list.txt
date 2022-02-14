@@ -1,7 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/cyclenotation/1080p60/partial_movie_files/TextBookCycle2/450974505_1137921087_770506253.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/cyclenotation/1080p60/partial_movie_files/TextBookCycle2/34786186_677768837_1966970766.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/cyclenotation/1080p60/partial_movie_files/TextBookCycle2/34786186_3561531760_2527272209.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/cyclenotation/1080p60/partial_movie_files/TextBookCycle2/34786186_3882714784_4001941441.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/cyclenotation/1080p60/partial_movie_files/TextBookCycle2/34786186_1787631198_1238082633.mp4'
-file 'file:C:/Users/micha/PycharmProjects/umtymp-at-group-project/media/videos/cyclenotation/1080p60/partial_movie_files/TextBookCycle2/34786186_2361176106_2321096419.mp4'

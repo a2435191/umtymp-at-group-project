@@ -178,7 +178,7 @@ class Composition3(Scene):
         self.wait(0.25)
 
         # p5
-        self.play(Write(fl), Write(flt, lag_ratio=0.75))
+        self.play(Create(fl), Create(flt, lag_ratio=0.75))
 
         self.play(Write(values[4]))
 

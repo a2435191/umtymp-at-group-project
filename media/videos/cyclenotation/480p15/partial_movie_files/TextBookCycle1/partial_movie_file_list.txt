@@ -1,3 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/pramo/github/umtymp-at-group-project/media/videos/cyclenotation/480p15/partial_movie_files/TextBookCycle1/3163782288_3367019305_686847149.mp4'
-file 'file:C:/Users/pramo/github/umtymp-at-group-project/media/videos/cyclenotation/480p15/partial_movie_files/TextBookCycle1/2201830969_911279156_298380343.mp4'

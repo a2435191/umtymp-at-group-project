@@ -1,2 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/WillJBradley/Desktop/umtymp-at-2022/umtymp-at-group-project/media/videos/test/480p15/partial_movie_files/CreateCircle/3163782288_2933097137_3768686611.mp4'

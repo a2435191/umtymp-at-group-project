@@ -1,3 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/pramo/github/umtymp-at-group-project/media/videos/permcomposition/480p15/partial_movie_files/Composition2/3163782288_435074354_628429689.mp4'
-file 'file:C:/Users/pramo/github/umtymp-at-group-project/media/videos/permcomposition/480p15/partial_movie_files/Composition2/2201830969_3258979189_4145916746.mp4'

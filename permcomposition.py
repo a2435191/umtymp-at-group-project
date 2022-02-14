@@ -149,9 +149,9 @@ class Composition3(Scene):
 
         self.wait(0.25)
 
-        self.play(*shiftywifty(0,3), ReplacementTransform(VGroup(l2p1, at21), VGroup(l2p4, at22)))
-
         self.play(Write(values[1]))
+
+        self.play(*shiftywifty(0,3), ReplacementTransform(VGroup(l2p1, at21), VGroup(l2p4, at22)))
 
         self.wait(0.25)
 
@@ -167,13 +167,22 @@ class Composition3(Scene):
 
         self.wait(0.25)
 
-        self.play(*shiftywifty(0,4), ReplacementTransform(VGroup(l3p1, at31), VGroup(l3p4, at32)), Write(fl), Write(flt, lag_ratio=0.75))
+        self.play(Write(values[3]))
 
-        self.play(Write(values[3]), Write(values[4]))
+        self.play(*shiftywifty(0,4), ReplacementTransform(VGroup(l3p1, at31), VGroup(l3p4, at32)))
 
         self.wait(0.25)
 
-        self.play(Uncreate(l3p4), Uncreate(at32), Uncreate(fl), Uncreate(flt))
+        self.play(Uncreate(l3p4), Uncreate(at32))
+
+        self.wait(0.25)
+
+        # p5
+        self.play(Write(fl), Write(flt, lag_ratio=0.75))
+
+        self.play(Write(values[4]))
+
+        self.play(Uncreate(fl), Uncreate(flt))
 
         self.wait(0.25)
 

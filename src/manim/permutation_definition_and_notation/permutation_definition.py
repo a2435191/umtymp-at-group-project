@@ -15,6 +15,11 @@ class ArrayDefinition(Scene):
         right_bracket = Tex(r"\}", font_size=BRACKET_SIZE).shift(1.0 * RIGHT + 0.8 * RIGHT)
 
         self.play(
+            Write(left_bracket),
+            Write(set_label),
+            Write(right_bracket)
+        )
+        self.play(
             left_bracket.animate.shift(3 * LEFT),
             set_label.animate.shift(3 * LEFT),
             right_bracket.animate.shift(3 * RIGHT)
@@ -33,7 +38,7 @@ class ArrayDefinition(Scene):
 
         
         self.play(upper.animate.shift(UP * 2), lower.animate.shift(DOWN * 2))
-        self.play(Create(function_label))
+        self.play(Write(function_label))
         
 
         mapping = {0: 1, 2: 0, 1: 2}
@@ -54,7 +59,7 @@ class ArrayDefinition(Scene):
             
             self.play(AnimationGroup(
                 Create(arrow), 
-                Create(function_text), 
+                Write(function_text), 
                 ScaleInPlace(function_input, 100),
                 ScaleInPlace(function_output, 100)
             ))

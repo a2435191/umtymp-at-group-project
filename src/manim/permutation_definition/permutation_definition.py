@@ -1,4 +1,3 @@
-from turtle import right
 from manim import *
 from typing import List
 

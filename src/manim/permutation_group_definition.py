@@ -5,7 +5,7 @@ from copy import deepcopy
 import math
 
 
-class Definition(Scene):
+class PermutationGroupDefinition(Scene):
     def construct(self):
         r = 0.5
 

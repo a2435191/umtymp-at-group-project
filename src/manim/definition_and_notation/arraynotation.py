@@ -1,103 +1,138 @@
 from manim import *
 import numpy as np
-import math
-from typing import List
+from numpy import array
 from copy import deepcopy
-from itertools import permutations
+import math
 
 class ArrayNotation(Scene):
     def construct(self):
-        CIRCLE_COLORS = ['#0000FF', '#FF0000', '#FFFF00']
-        POSITIONS = [3 * LEFT, 0, 3 * RIGHT]
+        r = 0.5
+
+        vg = VGroup()
+        michael = Circle(radius=r, color='#0000FF', fill_color='#0000FF', fill_opacity=0.75)
+        pramod = Circle(radius=r, color='#FF0000', fill_color='#FF0000', fill_opacity=0.75)
+        will = Circle(radius=r, color='#FFFF00', fill_color='#FFFF00', fill_opacity=0.75)
+        michael.move_to(array([-2, 0, 0]))
+        will.move_to(array([2, 0, 0]))
+
+        vg.add(michael, pramod, will)
+
+        transforms = []
+        horiz_spread = 4
+        vert_spread = 4
+        vert_shift = 0.75
+
+        for j in reversed(range(2)):
+            for i in range(3):
+                new = vg.copy().scale(0.5)
+                new.move_to(array([(i-1)*horiz_spread, (j-0.5)*vert_spread + vert_shift, 0]))
+                transforms.append(new)
 
 
-        big_circles = VGroup(*[Circle(0.5, color, fill_opacity=0.75).shift(pos) 
-            for color, pos in zip(CIRCLE_COLORS, POSITIONS)])
-        big_circles_text = VGroup(*[Tex(str(i + 1)).shift(pos) # separate so that we can use Create/Write separately
-            for i, pos in enumerate(POSITIONS)])
+        self.play(
+            Create(vg)
+        )
 
-        self.play(Create(big_circles), Write(big_circles_text))
         self.wait(2)
 
-        self.remove(big_circles, big_circles_text)
-        big_circles.add(*big_circles_text) # so that text moves with circles
-        
-        
-        V_SPACING, H_SPACING = 2, 5
-        INTERNAL_V_SPACING = 0.75
-        
-        MY_UP = UP * V_SPACING
-        MY_DN = DOWN * V_SPACING
-        MY_LF = LEFT * H_SPACING
-        MY_RT = RIGHT * H_SPACING
-        center_coordinates = [
-            MY_UP + MY_LF, MY_UP, MY_UP + MY_RT,
-            MY_DN + MY_LF, MY_DN, MY_DN + MY_RT,
+        self.remove(vg)
+
+        self.play(
+            *[ReplacementTransform(mobject=vg.copy(), target_mobject=obj) for obj in transforms]
+        )
+
+        self.wait(2)
+
+        perms = [[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0], [2, 0, 1], [2, 1, 0]]
+        inv_perms = [[0, 1, 2], [0, 2, 1], [1, 0, 2], [2, 0, 1], [1, 2, 0], [2, 1, 0]]
+        permed = []
+        for i in range(6):
+            pos = {j: transforms[i][perms[i][j]].get_center() for j in range(3)}
+            new_group = transforms[i].copy()
+            for n in range(3):
+                new_group[n].move_to(pos[n])
+                new_group[n].shift(array([0, -1.5, 0]))
+            permed.append(new_group)
+
+        arrows = [Line(
+                        start=transforms[i][j].get_center() + 0.33 * (permed[i][j].get_center() - transforms[i][j].get_center()) / np.linalg.norm((permed[i][j].get_center() - transforms[i][j].get_center())),
+                        end=permed[i][j].get_center() - 0.33 * (permed[i][j].get_center() - transforms[i][j].get_center()) / np.linalg.norm((permed[i][j].get_center() - transforms[i][j].get_center())),
+        ).add_tip(tip_length=0.15) for i in range(6) for j in range(3)]
+
+        shifted_arrows = [Line(
+            start=transforms[i][j].get_center() + 0.33 * (
+                        permed[i][inv_perms[i][j]].get_center() - transforms[i][j].get_center()) / np.linalg.norm(
+                (permed[i][inv_perms[i][j]].get_center() - transforms[i][j].get_center())),
+            end=permed[i][inv_perms[i][j]].get_center() - 0.33 * (
+                        permed[i][inv_perms[i][j]].get_center() - transforms[i][j].get_center()) / np.linalg.norm(
+                (permed[i][inv_perms[i][j]].get_center() - transforms[i][j].get_center())),
+        ).add_tip(tip_length=0.15) for i in range(6) for j in range(3)]
+
+        perm_anims = [ReplacementTransform(mobject=transforms[i].copy(), target_mobject=permed[i], run_time=0.5) for i in range(6)]
+        arrow_anims = [Create(arrow) for arrow in arrows]
+
+        for i in range(6):
+            self.play(*arrow_anims[i*3 : (i+1)*3], perm_anims[i])
+            self.wait(0.2)
+
+        self.wait(2)
+
+        labels = [MathTex(str(i)) for i in range(1, 4)]
+
+        top_label_groups = []
+        for i in range(6):
+            new_group = VGroup()
+            top_label_groups.append(new_group)
+            for j in range(3):
+                new_label = labels[j].copy().move_to(
+                    transforms[i][j].get_center()
+                )
+                new_group.add(new_label)
+
+        bottom_label_groups = []
+        for i in range(6):
+            new_group = VGroup()
+            bottom_label_groups.append(new_group)
+            for j in range(3):
+                new_label = labels[j].copy().move_to(
+                    permed[i][inv_perms[i][j]].get_center()
+                )
+                new_group.add(new_label)
+
+        self.play(
+            *[Write(top_label_groups[i], lag_ratio=0.5, run_time=1) for i in range(6)]
+        )
+
+        self.play(
+            *[Write(bottom_label_groups[i], lag_ratio=0.5, run_time=1) for i in range(6)]
+        )
+
+        self.wait(2)
+
+        ref_permed = deepcopy(permed)
+        ref_labels = deepcopy(bottom_label_groups)
+        self.play(
+            *[ReplacementTransform(mobject=arrows[i], target_mobject=shifted_arrows[i]) for i in range(len(arrows))],
+            *[permed[i][j].animate.move_to(ref_permed[i][inv_perms[i][j]].get_center()) for i in range(6) for j in range(3)],
+            *[bottom_label_groups[i][j].animate.move_to(ref_labels[i][inv_perms[i][j]].get_center()) for i in range(6) for j in range(3)]
+        )
+
+        self.wait(2)
+
+        self.play(
+            *[Uncreate(obj) for obj in [*transforms, *permed]],
+            *[FadeOut(obj) for obj in shifted_arrows]
+        )
+
+        reindex_perms = [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
+        recomb_labels = [VGroup(top_label_groups[i], bottom_label_groups[i]) for i in range(6)]
+        matrices = [
+            Matrix([[1, 2, 3], reindex_perms[i]], h_buff=1).move_to(recomb_labels[i].get_center())
+            for i in range(6)
         ]
+        self.play(
+            *[recomb_labels[i][j].animate.move_to(matrices[i].get_rows()[j].get_center()) for i in range(6) for j in range(2)],
+            *[Write(matrix.get_brackets()) for matrix in matrices]
+        )
 
-        top_circles = [big_circles.copy().scale(0.5).move_to(coord + INTERNAL_V_SPACING * UP).space_out_submobjects(0.75) 
-            for coord in center_coordinates]
-        btm_circles = [circle.copy().shift(2 * INTERNAL_V_SPACING * DOWN)
-            for circle in top_circles]
-        arrows: List[VGroup] = []
-        for top_vgroup, btm_vgroup in zip(top_circles, btm_circles):
-            arrow_group = VGroup(*[Arrow(top, btm) for top, btm in zip(top_vgroup, btm_vgroup) 
-                if isinstance(top, Circle) and isinstance(btm, Circle)])
-            arrows.append(arrow_group)
-
-
-        self.play(*[ReplacementTransform(big_circles.copy(), circle) 
-            for circle in top_circles])
-        
-        self.wait(1)
-
-        self.play(*[ReplacementTransform(top_circle_group.copy(), btm_circle_group)
-            for top_circle_group, btm_circle_group in zip(top_circles, btm_circles)])
-        self.play(*[AnimationGroup(*[Create(arrow) for arrow in arrow_group]) 
-            for arrow_group in arrows])
-        
-        self.wait()
-
-        all_permutations = list(permutations([1, 2, 3], 3))
-        internal_rotation_anims: List[AnimationGroup] = []
-        for i, permutation in enumerate(all_permutations):
-            btm_group = btm_circles[i]
-            
-            for old, new in enumerate(permutation):
-                internal_rotation_anims.append(AnimationGroup(
-                    btm_group[old].animate.move_to(btm_group[new - 1]),
-                    btm_group[old + 3].animate.move_to(btm_group[new - 1 + 3]) # text
-                ))
-        self.play(*internal_rotation_anims)
-            
-        self.wait()
-
-        uncreate_anims: List[Uncreate] = []
-        for circle_group in top_circles + btm_circles:
-            uncreate_anims += [Uncreate(circle_group[i]) for i in range(3)]
-        for arrow_group in arrows:
-            uncreate_anims += [Uncreate(arrow) for arrow in arrow_group]
-        self.play(AnimationGroup(*uncreate_anims))
-        self.wait()
-
-        top_text = [VGroup(circle_group[3:6]) for circle_group in top_circles]
-        btm_text = [VGroup(circle_group[3:6]) for circle_group in btm_circles]
-        
-        self.play(AnimationGroup(
-            *[text.animate.shift(DOWN * INTERNAL_V_SPACING * 0.5) for text in top_text],
-            *[text.animate.shift(UP   * INTERNAL_V_SPACING * 0.5) for text in btm_text]
-        ))
-        self.wait()
-
-        l_bracket = Tex(r"\Bigg[")
-        r_bracket = Tex(r"\Bigg]")
-
-        self.play(AnimationGroup(
-            *[Write(l_bracket.copy().move_to(text).shift(1.6 * LEFT  + 0.5 * INTERNAL_V_SPACING * DOWN)) for text in top_text],
-            *[Write(r_bracket.copy().move_to(text).shift(1.6 * RIGHT + 0.5 * INTERNAL_V_SPACING * DOWN)) for text in top_text]
-        ))
-        self.wait()
-        
-        
-
-        
+        self.wait(2)

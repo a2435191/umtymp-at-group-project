@@ -100,11 +100,11 @@ class ArrayNotation(Scene):
                 new_group.add(new_label)
 
         self.play(
-            *[Write(top_label_groups[i], lag_ratio=0.5, run_time=1) for i in range(6)]
+            *[Create(top_label_groups[i], lag_ratio=0.5, run_time=1) for i in range(6)]
         )
 
         self.play(
-            *[Write(bottom_label_groups[i], lag_ratio=0.5, run_time=1) for i in range(6)]
+            *[Create(bottom_label_groups[i], lag_ratio=0.5, run_time=1) for i in range(6)]
         )
 
         self.wait(2)

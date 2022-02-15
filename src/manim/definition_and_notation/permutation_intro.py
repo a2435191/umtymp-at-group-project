@@ -1,4 +1,3 @@
-from cairo import TextCluster
 from manim import *
 
 class PermutationIntro(Scene):
@@ -10,7 +9,6 @@ class PermutationIntro(Scene):
             original_text[1].animate.shift(DOWN * 10),
             original_text[2].animate.shift(LEFT * 1.1)
         )
+        self.wait(1.0)
+        self.play(original_text.animate.shift(DOWN * 10))
         self.wait()
-
-
-        

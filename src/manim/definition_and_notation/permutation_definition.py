@@ -1,5 +1,6 @@
 from manim import *
-from typing import List
+from numpy import array
+from copy import deepcopy
 
 class ArrayDefinition(Scene):
     """In the style of arraynotation.py
@@ -67,6 +68,7 @@ class ArrayDefinition(Scene):
 
 class CycleDefinition(Scene):
     """In the style of cyclenotation.py
+    Maybe unused?
     """
     def construct(self):
         r = 0.5

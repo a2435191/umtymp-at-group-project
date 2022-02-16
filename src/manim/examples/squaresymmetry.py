@@ -1,16 +1,16 @@
 from manim import *
 import numpy as np
 from numpy import array
+from util_write_group_defs import write_group_defs
 import math
 
 class DihedralSet(Scene):
     def construct(self):
-        dSet = MathTex(r"D_4","=\{","R_0",",","R_{90}",",","R_{180}",",","R_{270}",",","H",",","V",",","D",",","D'","\}", font_size=72)
-        #                 0     1     2    3     4      5     6       7     8       9   10  11  12  13  14  15  16   17
-
-        self.play(Write(dSet))
-
-        self.wait(0.2)
+        write_group_defs(
+            self, "Dihedral Group", "D_4", 
+            ["R_0","R_{90}","R_{180}","R_{270}","H","V","D","D'"],
+            r"\circ"
+        )
 
 class IntroduceSquary(Scene):
     def construct(self):

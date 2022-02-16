@@ -1,22 +1,16 @@
 from manim import *
 import numpy as np
 from numpy import array
+from util_write_group_defs import write_group_defs
 import math
 
 class DihedralSet(Scene):
     def construct(self):
-        dSet = MathTex(r"D_4","=(\{","R_0",",","R_{90}",",","R_{180}",",","R_{270}",",","H",",","V",",","D",",","D'","\},", "\circ", ")", font_size=64)
-        #                 0      1     2    3     4      5     6       7     8       9   10  11  12  13  14  15  16    17      18    19
-
-        for c in "RHDV": # to be colored red
-            dSet.set_color_by_tex(c, RED)
-        dSet.set_color_by_tex(r"D_4", WHITE) # HACK
-        dSet.set_color_by_tex("circ", BLUE)
-        self.play(Write(dSet))
-
-        self.wait(1.7)
-        self.play(Unwrite(dSet))
-        self.wait(0.4)
+        write_group_defs(
+            self, "Dihedral Group", "D_4", 
+            ["R_0","R_{90}","R_{180}","R_{270}","H","V","D","D'"],
+            r"\circ"
+        )
 
 class IntroduceSquary(Scene):
     def construct(self):

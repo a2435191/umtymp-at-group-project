@@ -1,3 +1,5 @@
+# Written by Pramod Anandarao
+
 from manim import *
 import numpy as np
 from numpy import array
@@ -7,7 +9,7 @@ import math
 class DihedralSet(Scene):
     def construct(self):
         write_group_defs(
-            self, "Dihedral Group", "D_4", 
+            self, "Dihedral Group", "D_4",
             ["R_0","R_{90}","R_{180}","R_{270}","H","V","D","D'"],
             r"\circ"
         )

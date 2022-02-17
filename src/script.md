@@ -13,3 +13,6 @@ Given two permutations *sigma* and *gamma*, we can compose them by following the
 But what other notation can we use? For some permutation *alpha*, we observe that some elements map to themselves under repeated applications of *alpha*. We can partition the elements of *alpha* into cycles according to this principle. Cycles are not only an interesting property of permutations; they also serve as an alternative notation.
 
 Permutation *groups* are therefore a set of permutations equipped with the permutation composition operation.
+
+## 2. Examples of permutation groups
+We've already discussed one example of a permutation group without giving it a name— the symmetric group of degree n. The elements of this group are *all* the bijections from a set of cardinality n to itself.

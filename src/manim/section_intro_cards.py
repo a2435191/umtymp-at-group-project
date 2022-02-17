@@ -16,7 +16,13 @@ class Intro1(Scene):
     def construct(self):
         draw_intro(self, 1, "What is a permutation? (+notation)")
 
+class Intro2(Scene):
+    def construct(self):
+        draw_intro(self, 2, "Examples of permutation groups")
 
+class Intro3(Scene):
+    def construct(self):
+        draw_intro(self, 3, "Properties and theorems")
         
     
     

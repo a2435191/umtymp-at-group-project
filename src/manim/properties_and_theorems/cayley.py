@@ -206,6 +206,8 @@ class Cayley1(Scene):
             ReplacementTransform(Tg_comp_def3, Tg_inv)
         )
 
+        self.wait(2)
+
 
 class Cayley2(Scene):
     def construct(self):
@@ -225,26 +227,53 @@ class Cayley2(Scene):
 
         self.add(group_def, Tg_func, divider)
 
-        props = Tex(r'''
-        $T_g$''', r'''
-        is...\\''', r'''
-        \begin{itemize}
-        \item bijective (well-defined inverse)''', r'''
-        \item self-mapping on set of elements in $G$''', r'''
-        \end{itemize}
-        \vdots\\''', r'''
-        permutation!
-        ''')
+        prop1 = MathTex(r'T', r'_g', r'\text{ is\ldots}')
+        prop1[1].set_color(BLUE)
+        prop2 = Tex(r'bijective (well-defined inverse)')
+        prop3 = Tex(r'a self-mapping of the set of elements in $G$')
+        prop4 = Tex(r'\vdots')
+        prop5 = Tex(r'permutation!')
+        prop1.shift(UP*1)
+
+        print(prop1)
+
+        vg = VGroup(prop1, prop2, prop3, prop4, prop5)
+        for i in range(4):
+            vg[i+1].next_to(vg[i], DOWN)
 
         self.play(
-            Write(props[0])
+            Write(vg[0])
         )
         self.play(
-            Write(props[1])
+            Write(vg[1])
         )
         self.play(
-            Write(props[2])
+            Write(vg[2])
         )
         self.play(
-            Write(props[3])
+            Write(vg[3])
         )
+        self.play(
+            Write(vg[4])
+        )
+
+        self.wait(2)
+
+
+class Cayley3(Scene):
+    def construct(self):
+        group_def = MathTex(r'G = \left(', r'\{g_1, g_2, ...\}', r',', r'*', r'\right)')
+        group_def[1].set_color(BLUE)
+        group_def[3].set_color(RED)
+        group_def.move_to(UP * 3 + LEFT * 4)
+
+        Tg_func = MathTex(r'T', r'_g', r'(', r'x', r') =', r'g', r'*', r'x')
+        Tg_func[1].set_color(BLUE)
+        Tg_func[5].set_color(BLUE)
+        Tg_func[6].set_color(RED)
+        Tg_func.move_to(UP * 3 + RIGHT * 4)
+
+        divider = Line(array([-10, 0, 0]), array([10, 0, 0]), color=YELLOW)
+        divider.move_to(UP * 2.5)
+
+        self.add(group_def, Tg_func, divider)

@@ -87,3 +87,30 @@ class PileOfTheorems(Scene):
             self.play(randomfloat(W1, a*2), randomfloat(W2, -a*2), randomfloat(W3, a*2), randomfloat(W4, -a*2), randomfloat(W5, a*2), randomfloat(W6, -a*2), randomfloat(W7, a*2))
         self.play(randomfloat(W1, -a), randomfloat(W2, a), randomfloat(W3, -a), randomfloat(W4, a), randomfloat(W5, -a), randomfloat(W6, a), randomfloat(W7, -a))
         #self.play(VGroup(THEOREM1, THEOREM2, THEOREM3, THEOREM4, THEOREM5, THEOREM6, THEOREM7).animate(run_time=2, rate_func=rate_functions.smooth).shift(UP*0.3))
+
+class PileOfDefinitions(Scene):
+    def construct(self):
+        d1 = Line([-7/3, 5, 0], [-7/3, -5, 0], color=YELLOW)
+        d2 = Line([7/3, 5, 0], [7/3, -5, 0], color=YELLOW)
+
+        # disjoint cycles
+        DisjointTitle = Tex(r'Disjoint Cycles', color=YELLOW).move_to([-14/3, 2, 0])
+        DisjointDef = Tex(r'Two cycles are\\said to be \textit{disjoint}\\ if no element\\ appears in both.')
+        DisjointDef.next_to(DisjointTitle, DOWN)
+        #VGroup(DisjointTitle, DisjointDef).move_to([-14/3, 0, 0])
+
+        # parity
+        ParityTitle = Tex(r'Even and Odd\\ Permutations', color=YELLOW).move_to([0, 2, 0])
+        ParityDef = Tex(r'A permutation that can be\\ expressed as a product of\\ an even number of 2-cycles\\ is called an \textit{even}\\ permutation. A permutation\\ that can be expressed as\\ a product of an odd number\\ of 2-cycles is called an \textit{odd}\\ permutation.').scale(0.65)
+        ParityDef.next_to(ParityTitle, DOWN)
+        #VGroup(ParityTitle, ParityDef).move_to([0, 0, 0])
+
+        # alternating group
+        AlternatingTitle = Tex(r'Alternating Groups', color=YELLOW).move_to([14/3, 2, 0])
+        AlternatingDef = Tex(r'The group of\\ even permutations\\ of $n$ symbols\\ is denoted by $A_n$\\ and is called the\\ \textit{alternating group\\ of degree} $n$.')
+        AlternatingDef.next_to(AlternatingTitle, DOWN)
+        #VGroup(AlternatingTitle, AlternatingDef).move_to([14/3, 0, 0])
+
+
+        self.play(Create(d1), Create(d2), Write(DisjointTitle), Write(ParityTitle), Write(AlternatingTitle))
+        self.play(Write(DisjointDef), Write(ParityDef), Write(AlternatingDef))

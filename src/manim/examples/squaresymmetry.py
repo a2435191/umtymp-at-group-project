@@ -24,10 +24,10 @@ class IntroduceSquary(Scene):
         rad = 0.3
         cornerdots = VGroup(Dot(point=[2,-2,0], radius=rad, color=BLUE).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[2,2,0], radius=rad, color=RED).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[-2,2,0], radius=rad, color=GREEN).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[-2,-2,0], radius=rad, color=ORANGE).set_stroke(width=4).set_fill(color=BLACK))
 
-        corn0 = MathTex(r'\alpha').set_stroke(width=1.5).set_fill(opacity=0)
-        corn1 = MathTex(r'\beta').set_stroke(width=1.5).set_fill(opacity=0)
-        corn2 = MathTex(r'\gamma').set_stroke(width=1.5).set_fill(opacity=0)
-        corn3 = MathTex(r'\delta').set_stroke(width=1.5).set_fill(opacity=0)
+        corn0 = MathTex(r'\alpha').set_stroke(width=1).set_fill(opacity=0)
+        corn1 = MathTex(r'\beta').set_stroke(width=1).set_fill(opacity=0)
+        corn2 = MathTex(r'\gamma').set_stroke(width=1).set_fill(opacity=0)
+        corn3 = MathTex(r'\delta').set_stroke(width=1).set_fill(opacity=0)
 
         corn0.move_to(cornerdots[0].get_center())
         corn1.move_to(cornerdots[1].get_center())
@@ -87,8 +87,8 @@ class IntroduceSquary(Scene):
 
         self.wait(2)
 
-        rt = 2
-        self.play(Rotate(VGroup(square, cornerdots), PI/2, run_time=1), Create(arrow12, run_time=rt), Create(arrow23, run_time=rt), Create(arrow34, run_time=rt), Create(arrow41, run_time=rt)) #90 degree counterclockwise
+        rt = 1
+        self.play(Rotate(VGroup(square, cornerdots), PI/2, run_time=1), Write(arrow12, run_time=rt), Write(arrow23, run_time=rt), Write(arrow34, run_time=rt), Write(arrow41, run_time=rt)) #90 degree counterclockwise
 
         self.wait(2)
 
@@ -96,20 +96,26 @@ class IntroduceSquary(Scene):
 
         self.wait(2)
 
-        self.play(Uncreate(VGroup(arrow41, arrow34, arrow23, arrow12)), Unwrite(r90matrix.get_rows()[1]), Unwrite(r90eq[0]), Unwrite(r90text))
+        self.play(Unwrite(arrow12, run_time=rt), Unwrite(arrow23, run_time=rt), Unwrite(arrow34, run_time=rt), Unwrite(arrow41, run_time=rt), Unwrite(r90matrix.get_rows()[1]), Unwrite(r90eq[0]), Unwrite(r90text), Rotate(VGroup(square, cornerdots), -PI/2, run_time=1))
 
         self.wait(2)
 
-        arrowR = CurvedDoubleArrow(start_point=corn0.get_center()+RIGHT*f, end_point=corn3.get_center()+RIGHT*f, angle=0, tip_length=0.3, color=YELLOW)
-        arrowL = CurvedDoubleArrow(start_point=corn2.get_center()+LEFT*f, end_point=corn1.get_center()+LEFT*f, angle=0, tip_length=0.3, color=YELLOW)
+        #arrowR = CurvedDoubleArrow(start_point=corn0.get_center()+RIGHT*f, end_point=corn3.get_center()+RIGHT*f, angle=0, tip_length=0.3, color=YELLOW)
+        #arrowL = CurvedDoubleArrow(start_point=corn2.get_center()+LEFT*f, end_point=corn1.get_center()+LEFT*f, angle=0, tip_length=0.3, color=YELLOW)
+        arrowRU = Arrow(start=square.get_center()+RIGHT*2.5+DOWN*0.25, end=corn1.get_center()+RIGHT*f, tip_length=0.3, color=YELLOW)
+        arrowRD = Arrow(start=square.get_center()+RIGHT*2.5+UP*0.25, end=corn0.get_center()+RIGHT*f, tip_length=0.3, color=YELLOW)
+        arrowLU = Arrow(start=square.get_center()+LEFT*2.5+DOWN*0.25, end=corn2.get_center()+LEFT*f, tip_length=0.3, color=YELLOW)
+        arrowLD = Arrow(start=square.get_center()+LEFT*2.5+UP*0.25, end=corn3.get_center()+LEFT*f, tip_length=0.3, color=YELLOW)
+        flipline = DashedLine(square.get_center()+LEFT*2.25, square.get_center()+RIGHT*2.25, dash_length=0.15, color=YELLOW)
 
         self.play(Write(refleq[0]), Write(refltext))
 
         self.wait(2)
 
         #self.play(VGroup(square, cornerdots).animate.flip(axis=array([1,0,0]))) #horizontal reflection
-        rt = 0.75
-        self.play(Create(arrowR, run_time=1), Create(arrowL, run_time=1), square.animate(run_time=rt).flip(axis=array([1,0,0])), VGroup(corn0, cornerdots[0]).animate(run_time=rt).move_to(cornerdots[3].get_center()), VGroup(corn3, cornerdots[3]).animate(run_time=rt).move_to(cornerdots[0].get_center()), VGroup(corn1, cornerdots[1]).animate(run_time=rt).move_to(cornerdots[2].get_center()), VGroup(corn2, cornerdots[2]).animate(run_time=rt).move_to(cornerdots[1].get_center()))#, corn3.animate.move_to(corn0.get_center()), corn2.animate.move_to(corn3.get_center()), corn3.animate.move_to(corn2.get_center()))
+        rt = 2
+        self.play(Create(flipline))
+        self.play(Write(arrowRU, run_time=2), Write(arrowRD, run_time=2), Write(arrowLU, run_time=2), Write(arrowLD, run_time=2), square.animate(run_time=rt).flip(axis=array([1,0,0])), VGroup(corn0, cornerdots[0]).animate(run_time=rt).move_to(cornerdots[1].get_center()), VGroup(corn1, cornerdots[1]).animate(run_time=rt).move_to(cornerdots[0].get_center()), VGroup(corn2, cornerdots[2]).animate(run_time=rt).move_to(cornerdots[3].get_center()), VGroup(corn3, cornerdots[3]).animate(run_time=rt).move_to(cornerdots[2].get_center()))#, corn3.animate.move_to(corn0.get_center()), corn2.animate.move_to(corn3.get_center()), corn3.animate.move_to(corn2.get_center()))
 
         self.wait(2)
 
@@ -117,6 +123,6 @@ class IntroduceSquary(Scene):
 
         self.wait(2)
 
-        self.play(Uncreate(arrowR), Uncreate(arrowL))
+        self.play(Uncreate(flipline), Unwrite(arrowRU), Unwrite(arrowRD), Unwrite(arrowLU), Unwrite(arrowLD), square.animate(run_time=rt).flip(axis=array([1,0,0])), VGroup(corn0, cornerdots[0]).animate(run_time=rt).move_to(cornerdots[1].get_center()), VGroup(corn1, cornerdots[1]).animate(run_time=rt).move_to(cornerdots[0].get_center()), VGroup(corn2, cornerdots[2]).animate(run_time=rt).move_to(cornerdots[3].get_center()), VGroup(corn3, cornerdots[3]).animate(run_time=rt).move_to(cornerdots[2].get_center()))
 
         self.wait(0.2)

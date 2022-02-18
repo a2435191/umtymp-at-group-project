@@ -45,7 +45,7 @@ class CaesarCypher(Scene):
 
         arr3 = VGroup(*[Arrow(start=[0,0.75,0], end=[-3*14/26-7/26-7/52,-0.75,0], tip_length=0.15, color=YELLOW, stroke_width=4) for i in range(26*3)])
         for i in range(26*3):
-                arr3[i].move_to([-14-7+14/26*(i+2+7/26)-7/52, 0, 0])
+                arr3[i].move_to([-14-7+14/26*(i+2+7/26)-7/52-3*14/26, 0, 0])
 
         #for i in range(26):
         #    arrows[i].move_to([-7+14/26*i+7/26, 0, 0])

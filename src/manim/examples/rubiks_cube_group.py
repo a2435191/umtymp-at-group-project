@@ -53,11 +53,11 @@ class DefineElements(ThreeDScene):
             print("target", actual_rubix_cube_center + outwards_vector_normalized * 2.5)
             tex = Tex(
                 f"${axis}$ ",
-                "(clockwise)\n\n",
+                "(CW)\n\n",
                 f"${axis}'$ ",
-                "(counterclockwise)", font_size=64)\
+                "(CCW)", font_size=56)\
                 .set_color_by_tex(axis, RED)\
-                .shift(2.5 * UP, 3.5 * RIGHT)
+                .shift(2.7 * UP, 4.5 * RIGHT)
             self.add_fixed_in_frame_mobjects(tex)
             self.add_fixed_orientation_mobjects(tex)
 

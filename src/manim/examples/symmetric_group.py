@@ -17,7 +17,7 @@ class SymmetricalGroup(Scene):
             bmatrices.append(matrix)
 
 
-        write_group_defs(self, "Symmetrical Group", r"S_3", bmatrices, r"\circ", math_font_size=36, read_time=4.0)
+        write_group_defs(self, "Symmetric Group", r"S_3", bmatrices, r"\circ", math_font_size=36, read_time=4.0)
 
 class ShowAllBijections(Scene): 
     @staticmethod

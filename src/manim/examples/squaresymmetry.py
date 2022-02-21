@@ -5,6 +5,7 @@ import numpy as np
 from numpy import array
 from util_write_group_defs import write_group_defs
 import math
+from copy import deepcopy
 
 class DihedralSet(Scene):
     def construct(self):
@@ -124,5 +125,54 @@ class IntroduceSquary(Scene):
         self.wait(2)
 
         self.play(Uncreate(flipline), Unwrite(arrowRU), Unwrite(arrowRD), Unwrite(arrowLU), Unwrite(arrowLD), square.animate(run_time=rt).flip(axis=array([1,0,0])), VGroup(corn0, cornerdots[0]).animate(run_time=rt).move_to(cornerdots[1].get_center()), VGroup(corn1, cornerdots[1]).animate(run_time=rt).move_to(cornerdots[0].get_center()), VGroup(corn2, cornerdots[2]).animate(run_time=rt).move_to(cornerdots[3].get_center()), VGroup(corn3, cornerdots[3]).animate(run_time=rt).move_to(cornerdots[2].get_center()))
+
+        self.wait(0.2)
+
+class AllSquareComps(Scene):
+    def construct(self):
+        sl=0.75
+        rad = 0.1
+        arcbuff = 0.15
+
+        arcR90 = CurvedArrow(start_point=[sl/2-arcbuff,-sl/2+arcbuff,0], end_point=[-sl/2+arcbuff,sl/2-arcbuff,0], tip_length=0.15, stroke_width=3, color=YELLOW)
+        arcR90.shift(DOWN*0.025)
+        squareR90 = VGroup(Square(side_length=sl), Dot(point=[sl/2,-sl/2,0], color=BLUE).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[sl/2,sl/2,0], color=RED).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[-sl/2,sl/2,0], color=GREEN).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[-sl/2,-sl/2,0], color=ORANGE).set_stroke(width=4).set_fill(color=BLACK), arcR90)
+        R90Matrix = MobjectMatrix([VGroup(squareR90)],left_bracket="(",right_bracket=r")")
+
+        Harrow = DoubleArrow(start=[0,-0.5,0], end=[0,0.5,0], tip_length=0.1, color=YELLOW).set_stroke(width=4)
+        Hdline = DashedLine([-0.5,0,0],[0.5,0,0], stroke_width=3, color=YELLOW)
+        squareH = VGroup(Square(side_length=sl), Dot(point=[sl/2,-sl/2,0], color=BLUE).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[sl/2,sl/2,0], color=RED).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[-sl/2,sl/2,0], color=GREEN).set_stroke(width=4).set_fill(color=BLACK), Dot(point=[-sl/2,-sl/2,0], color=ORANGE).set_stroke(width=4).set_fill(color=BLACK), Hdline, Harrow)
+        HMatrix = MobjectMatrix([VGroup(squareH)],left_bracket="(",right_bracket=r")")
+
+        def CreateR90(exp):
+            if exp == None:
+                return deepcopy(R90Matrix)
+            else:
+                R90exp = MathTex(str(exp))
+                R90exp.next_to(R90Matrix, UP/4+RIGHT/4).shift(DOWN/4)
+                return deepcopy(VGroup(R90Matrix, R90exp))
+
+        def CreateH(exp):
+            if exp == None:
+                return deepcopy(HMatrix)
+            else:
+                Hexp = MathTex(str(exp))
+                Hexp.next_to(HMatrix, UP/4+RIGHT/4).shift(DOWN/4)
+                return deepcopy(VGroup(HMatrix, Hexp))
+
+        R0text = MathTex(r'R_0',r'=',r'\rho^4',r'=',r'\phi^2')
+        R90text = MathTex(r'R_{90}',r'=')
+        R180text = MathTex(r'R_{180}',r'=')
+        R270text = MathTex(r'R_{270}',r'=')
+        equals = MathTex(r'=')
+
+        R0t1 = deepcopy(VGroup(R0text[0:2], CreateR90(4))).arrange()
+        R0t2 = deepcopy(VGroup(R0text[0:2], CreateR90(4), R0text[3:])).arrange()
+        R0t3 = deepcopy(VGroup(R0text[0:2], CreateR90(4), R0text[3], CreateH(2))).arrange()
+
+        self.play(Write(R0text[0:3]))
+        self.play(ReplacementTransform(R0text[2], R0t1[1]))
+        #self.play(ReplacementTransform(R0t1, R0t2))
+        #self.play(ReplacementTransform(R0t2, R0t3))
 
         self.wait(0.2)

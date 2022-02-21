@@ -8,10 +8,17 @@ import numpy as np
 
 class RubiksCubeGroup(Scene):
     def construct(self):
-        write_group_defs(self, "Rubik's cube group", r"R_3", 
-            ["F", "B", "U", "L", "D", "R"],
-            "\circ"
-        )
+        title = Tex(r"\underline{Rubik's cube group}", font_size=72).shift(UP * 2)
+        set_def = MathTex(r"S", r"= \{F, B, U, L, D, R\}", font_size=64).next_to(title, DOWN)
+        grp_def = MathTex(r"R_3 = \langle S, \circ \rangle", 
+            substrings_to_isolate=[r'S', r'\circ'], font_size=64)\
+            .set_color_by_tex_to_color_map({r'S': RED, r'\circ': BLUE})\
+            .next_to(set_def, DOWN)
+
+        self.play(Write(title), Write(set_def), Write(grp_def))
+        self.wait(2)
+        self.play(Unwrite(title), Unwrite(set_def), Unwrite(grp_def))
+        self.wait()
     
 class DefineElements(ThreeDScene):
     def construct(self):

@@ -26,7 +26,7 @@ class Intro3(Scene):
 
 class Intro4(Scene):
     def construct(self):
-        draw_intro(self, 4, "Relevance and discussion")
+        draw_intro(self, 4, "Related math theory")
         
     
     

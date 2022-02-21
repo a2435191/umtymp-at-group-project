@@ -11,7 +11,7 @@ class CaesarCypher(Scene):
     def construct(self):
         font_name = 'Red Hat Mono Light'
 
-        pmatrix = Matrix([[str(i) for i in range(26)],['24','25','26']+[str(i) for i in range(23)]], h_buff=0.7).scale(0.65)
+        pmatrix = Matrix([[str(i) for i in range(26)],['23','24','25']+[str(i) for i in range(23)]], h_buff=0.7, element_alignment_corner=array([ 0., 0., 0.])).scale(0.65)
 
         rectt = Rectangle(width=28, height=14/26, grid_xstep=14/26, color=BLUE).shift(UP)
         rectb = Rectangle(width=28, height=14/26, grid_xstep=14/26, color=RED).shift(DOWN)
@@ -123,6 +123,19 @@ class CaesarCypher(Scene):
 
         self.wait(2)
 
-        self.play(ReplacementTransform(VGroup(rectt, rectb, numst, numsb), pmatrix))
+        # self.play(ReplacementTransform(VGroup(rectt, rectb, numst, numsb), pmatrix))
+        rows = pmatrix.get_rows()
+        self.play(
+            FadeOut(rectt),
+            FadeOut(rectb),
+            *[FadeOut(obj) for obj in [numst[:26], numst[52:], numsb[:26-3], numsb[52-3:]]]
+        )
+        self.play(
+            ReplacementTransform(numst[26:52], rows[0]),
+            ReplacementTransform(numsb[26-3:52-3], rows[1])
+        )
+        self.play(
+            Write(pmatrix.get_brackets())
+        )
 
         self.wait(0.2)

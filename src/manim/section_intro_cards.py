@@ -23,6 +23,10 @@ class Intro2(Scene):
 class Intro3(Scene):
     def construct(self):
         draw_intro(self, 3, "Properties and theorems")
+
+class Intro4(Scene):
+    def construct(self):
+        draw_intro(self, 4, "Relevance and discussion")
         
     
     

@@ -258,16 +258,17 @@ class ArrayNotationMappingPositions(Scene):
 
         shifted_arrows = [Line(
             start=elements[i][j].get_center() + 0.36 * (
-                        translated[i][inv_perms[i][j]].get_center() - elements[i][j].get_center()) / np.linalg.norm(
-                (translated[i][inv_perms[i][j]].get_center() - elements[i][j].get_center())),
-            end=translated[i][inv_perms[i][j]].get_center() - 0.36 * (
-                        translated[i][inv_perms[i][j]].get_center() - elements[i][j].get_center()) / np.linalg.norm(
-                (translated[i][inv_perms[i][j]].get_center() - elements[i][j].get_center())),
+                        permed[i][inv_perms[i][j]].get_center() - elements[i][j].get_center()) / np.linalg.norm(
+                (permed[i][inv_perms[i][j]].get_center() - elements[i][j].get_center())),
+            end=permed[i][inv_perms[i][j]].get_center() - 0.36 * (
+                        permed[i][inv_perms[i][j]].get_center() - elements[i][j].get_center()) / np.linalg.norm(
+                (permed[i][inv_perms[i][j]].get_center() - elements[i][j].get_center())),
         ).add_tip(tip_length=0.15) for i in range(6) for j in range(3)]
 
         translate_anims = [ReplacementTransform(mobject=transforms[i].copy(), target_mobject=translated[i], run_time=0.5) for i in range(6)]
         arrow_anims = [Create(arrow) for arrow in arrows]
         perm_anims = [ReplacementTransform(mobject=elements[i].copy(), target_mobject=permed[i], run_time=0.5) for i in range(6)]
+        # perm_anims = [ReplacementTransform(mobject=elements[i][j].copy(), target_mobject=permed[i][j], run_time=0.5) for i in range(6)]
 
         self.remove(vg2)
         self.remove(vg3)
@@ -284,7 +285,7 @@ class ArrayNotationMappingPositions(Scene):
         self.wait(2)
 
         for i in range(6):
-            self.play(*arrow_anims[i*3 : (i+1)*3])
+            self.play(*arrow_anims[i*3 : (i+1)*3], perm_anims[i])
             self.wait(0.2)
 
         self.wait(2)
@@ -307,7 +308,7 @@ class ArrayNotationMappingPositions(Scene):
             bottom_label_groups.append(new_group)
             for j in range(3):
                 new_label = labels[j].copy().move_to(
-                    permed[i][perms[i][j]].get_center() + array([0, -0.5, 0])
+                    translated[i][j].get_center() + array([0, -0.5, 0])
                 )
                 new_group.add(new_label)
 
@@ -331,8 +332,8 @@ class ArrayNotationMappingPositions(Scene):
         ref_labels = deepcopy(bottom_label_groups)
         self.play(
             *[ReplacementTransform(mobject=arrows[i], target_mobject=shifted_arrows[i]) for i in range(len(arrows))],
-            *[translated[i][j].animate.move_to(ref_translated[i][perms[i][j]].get_center()) for i in range(6) for j in range(3)],
-            *[bottom_label_groups[i][j].animate.move_to(ref_labels[i][perms[i][j]].get_center()) for i in range(6) for j in range(3)]
+            *[translated[i][j].animate.move_to(ref_translated[i][inv_perms[i][j]].get_center()) for i in range(6) for j in range(3)],
+            *[bottom_label_groups[i][j].animate.move_to(ref_labels[i][inv_perms[i][j]].get_center()) for i in range(6) for j in range(3)]
         )
 
         self.wait(2)

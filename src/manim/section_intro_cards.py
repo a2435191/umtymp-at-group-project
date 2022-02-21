@@ -14,7 +14,7 @@ def draw_intro(self: Scene, section_number: int, subtitle: str) -> None:
 
 class Intro1(Scene):
     def construct(self):
-        draw_intro(self, 1, "What is a permutation? (+notation)")
+        draw_intro(self, 1, "What is a permutation group?")
 
 class Intro2(Scene):
     def construct(self):

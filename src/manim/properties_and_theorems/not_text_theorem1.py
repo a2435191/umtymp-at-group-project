@@ -161,7 +161,7 @@ class Theorem1Proof(Scene):
             Unwrite(induction_b_next)
         )
 
-        induction_next_choose = Tex(r"Choose $x, y \neq k + 1: a_k(x)b_k(x) \neq b_k(x)a_k(x)$.").move_to(induction_a_next, LEFT).shift(UP)
+        induction_next_choose = Tex(r"Choose $x \neq k + 1: a_k(x)b_k(x) \neq b_k(x)a_k(x)$.").move_to(induction_a_next, LEFT).shift(UP)
         self.play(Write(induction_next_choose))
 
         induction_final_a = MathTex(r"a_{k+1}(x) = ", r"\begin{cases}k + 1 & \text{if } x = k + 1 \\ a_k(x) & \text{otherwise}\end{cases}")\
